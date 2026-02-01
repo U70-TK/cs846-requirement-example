@@ -1,0 +1,5 @@
+Transcripts are written by Copilot GPT-5 mini using prompt: 
+"""In the docs/ folder, generate a folder with three transcripts in md files: customer_support.md, engineering.md, and finance.md. Try to write everything in a requirement interview's perspective. Start each question and answer with "Interviewer: ", "Interviewee". Your three different files should imitate different perspectives. Now you should act like a demanding client, who wants to build a frontend-backend system that supports an AI-based application, so that when the user takes a picture of something, the app will recognize what it is, and jump to the Wikipedia page about the thing. But however, the requirement may sound a bit unrealistic. Like the client has raised two absolutely not possible requirements:    
+1. Use AI-based technology to make the camera "see-through" things, and see the inner infrastructure of the thing (use a very affirmative tone and say this is a must-have).
+2. Change the background color of the app so that it matches the phone case's color (again, affirmative tone)."""
+The transcripts are then modified and further refined by Felix Wang. 
