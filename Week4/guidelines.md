@@ -42,7 +42,7 @@ Label every single user story with:
 - M - Must Have
 - S - Should Have
 - C - Could Have
-- W - Would Like But Can't Have
+- W - Won't Have
 
 **Reasoning:**
 
