@@ -4,9 +4,7 @@
 
 ## Guidelines
 
-### Guideline 1: Use Different Chats for Different Contexts [1]
-
-Design a structured context prompt, but avoid using the same prompt for different context problems.
+### Guideline 1: Use Different Chats for Different Contexts [1]. Design a structured context prompt, but avoid using the same prompt for different context problems.
 
 **Description:** The requirement always specifies that developers must design structured context prompts to achieve the goals based on the constraints, stakeholders, and evaluation criteria. In a prompt-based interaction, it is essential to enforce context isolation by mandating the use of separate conversational contexts (i.e., distinct chats) for different problem domains, thereby preventing context leakage, implicit assumption carryover, and requirement contamination across tasks.
 
@@ -30,7 +28,7 @@ Good prompt:
 - List types of customers, products, and goals.
 - List assumptions and out-of-scope items
 
-Here, all instructions align with one system, and the output is consistent.
+Here, all instructions align with one system, and the output is consistent. This guideline is true for all types of example problems.
 
 ---
 
