@@ -6,6 +6,56 @@
 
 ### Problem A_1: Requirement Validation, Risk, and Missing NFRs (privacy, compliance, and accessibility) check
 
+**Example Bad Solution without guideline**
+
+## Sources
+- Stakeholder interview transcripts in Exercise_A/docs/transcripts:
+  - customer_support.md
+  - finance.md
+  - engineering.md
+
+<font color="red">(Contaminated) This also covers “smart parking” occupancy prediction requirements.</font>
+<font color="red">(Contaminated) Stakeholders require a Calendar AI Assistant for scheduling meetings.</font>
+
+## Stakeholder summaries (quick)
+
+1. **Customer Support:**
+   - **Ambiguous/inconsistent**
+  - “Context retention” is vague: how long is a session and what should be remembered?
+  - “Personalized” is vague: based only on chat context or also customer/account info?
+  - “Fast” is vague: no latency target.
+   - **Targeted follow-up questions (contradictions, alternatives, missing NFRs)**
+  - What’s the minimum acceptable behavior (e.g., never ask for email twice in one session)?
+  - How long should a session last (15/30/60 minutes)?
+  - Is it acceptable to escalate to a human after 2 failed turns?
+  - Accessibility: do you need screen-reader friendly formatting or simpler language mode?
+
+---
+
+2. **Finance**
+   - **Ambiguous/inconsistent**
+  - “40% reduction” baseline is unclear (total monthly spend vs cost/session).
+  - “Minor UX regression” is unclear (how much CSAT drop is ok?).
+   - **Targeted follow-up questions (contradictions, alternatives, missing NFRs)**
+  - Which metric is the true goal: total spend, cost/session, or cost/resolved case?
+  - What is the maximum allowed temporary cost increase during a pilot?
+  - What is the maximum acceptable temporary increase in escalations or drop in CSAT?
+  - Any vendor constraints: data residency, security certifications, compliance requirements?
+
+---
+
+3. **Software Engineering**
+   - **Ambiguous/inconsistent**
+  - “Better model” is not defined by metrics (what is success?).
+  - Memory approach is not specified (summary vs full transcript vs retrieval).
+   - **Targeted follow-up questions (contradictions, alternatives, missing NFRs)**
+  - Define success metrics + thresholds (cost/session, p95 latency, CSAT, escalation rate).
+  - Provide an effort estimate (FTE-weeks) for memory, caching, adapter layer, and pilot.
+  - What is the rollback plan and target rollback time?
+  - Privacy: how will you redact PII and set retention/deletion for session memory and logs?
+
+---
+
 **Example Good Solution with Guideline**
 
 1. **Customer Support:**
