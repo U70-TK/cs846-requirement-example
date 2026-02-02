@@ -14,8 +14,9 @@
   - finance.md
   - engineering.md
 
-<font color="red">(Contaminated) This also covers “smart parking” occupancy prediction requirements.</font>
-<font color="red">(Contaminated) Stakeholders require a Calendar AI Assistant for scheduling meetings.</font>
+<span style="color:red">(Contaminated) This also covers “smart parking” occupancy prediction requirements.</span>
+
+<span style="color:red">(Contaminated) Stakeholders require a Calendar AI Assistant for scheduling meetings.</span>
 
 ## Stakeholder summaries (quick)
 
