@@ -6,7 +6,7 @@
 
 ### Problem A_1: Requirement Validation, Risk, and Missing NFRs (privacy, compliance, and accessibility) check
 
-**Example Solution with Guideline**
+**Example Good Solution with Guideline**
 
 1. **Customer Support:**
    - **Ambiguous/inconsistent**
