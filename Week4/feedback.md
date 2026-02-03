@@ -213,7 +213,7 @@ Justifications
 
 ---
 
-### 3. New and Updated Guidelines that worked for Problem A_1
+### 3. New and Updated Guidelines that worked
 
 #### Guideline 1:  Use Different Chats for Different Contexts. Design a structured context prompt, but avoid using the same prompt for different context problems.
 
