@@ -1,31 +1,31 @@
-# Week [] Feedback: []
+# Week 5 Feedback: Code Comprehension
 
 **Authors:** [Neel Sanjaybhai Faganiya, Ibrahim Mohammed Sayem, Felix Wang]
 
 ## 1. Counterexample Problems
 
-**Github repository URL:** https://github.com/U70-TK/cs846-requirement-example
+**Github repository URL:** https://github.com/U70-TK/cs846-requirement-example/Week5
 
-Find the related files in the ` ` folder.
+Find the related files in the `artifacts` folder.
 
 ## Example Problems
 
-### Problem A: 
+### Problem A: Code Documentation with Implementation-Dependent Contracts
 
-**Github repository URL:** https://github.com/U70-TK/cs846-requirement-example
-
+**Github repository URL:** https://github.com/U70-TK/cs846-requirement-example/Week5
 
 **Task Description:** 
+Document the `findShortestPath` function in the provided code. The function is part of a pathfinding system where the algorithm choice (BFS), data structure (queue), and traversal order are essential to the correctness guarantees. Your task is to create documentation that explains what the function does, its parameters, return value, guarantees, and any necessary details for the reviewer or developer.
 
 **Starter Code:**
-
+The code for this task and its related files can be found in the `artifacts` folder. The starter code is located at `artifacts/graph_traversal.cpp`.
 
 
 ---
 
 ### Problem B: 
 
-**Github repository URL:** https://github.com/U70-TK/cs846-requirement-example
+**Github repository URL:** https://github.com/U70-TK/cs846-requirement-example/Week5
 
 
 **Task Description:**
@@ -36,7 +36,7 @@ Find the related files in the ` ` folder.
 
 ### Problem C: 
 
-**Github repository URL:** https://github.com/U70-TK/cs846-requirement-example
+**Github repository URL:** https://github.com/U70-TK/cs846-requirement-example/Week5
 
 
 **Task Description:**

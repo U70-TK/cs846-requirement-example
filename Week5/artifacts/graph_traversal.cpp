@@ -1,0 +1,94 @@
+// graph_traversal.cpp
+// This file implements graph traversal algorithms for a pathfinding system
+// where the specific traversal order matters for correctness.
+
+#include <vector>
+#include <queue>
+#include <unordered_set>
+#include <algorithm>
+
+struct GraphNode {
+    int id;
+    std::vector<int> neighbors;
+    int priority;  // Lower priority = higher importance
+};
+
+class PathFinder {
+private:
+    std::vector<GraphNode> nodes;
+    
+public:
+    // Finds shortest path using priority-aware BFS
+    // CRITICAL: Must use BFS (not DFS) to guarantee shortest path
+    // CRITICAL: Must process nodes in priority order (lower priority first)
+    // CRITICAL: Must use queue (FIFO) to maintain level-order traversal
+    std::vector<int> findShortestPath(int start, int target) {
+        if (start == target) return {start};
+        
+        std::queue<int> q;
+        std::unordered_set<int> visited;
+        std::vector<int> parent(nodes.size(), -1);
+        
+        q.push(start);
+        visited.insert(start);
+        
+        while (!q.empty()) {
+            // Process all nodes at current level before next level
+            size_t level_size = q.size();
+            
+            // Sort current level by priority before processing
+            std::vector<std::pair<int, int>> level_nodes; // (priority, node_id)
+            for (size_t i = 0; i < level_size; i++) {
+                int node_id = q.front();
+                q.pop();
+                level_nodes.push_back({nodes[node_id].priority, node_id});
+            }
+            
+            // Sort by priority (lower priority = higher importance)
+            std::sort(level_nodes.begin(), level_nodes.end());
+            
+            // Process nodes in priority order
+            for (const auto& [priority, node_id] : level_nodes) {
+                if (node_id == target) {
+                    // Reconstruct path
+                    std::vector<int> path;
+                    int current = target;
+                    while (current != -1) {
+                        path.push_back(current);
+                        current = parent[current];
+                    }
+                    std::reverse(path.begin(), path.end());
+                    return path;
+                }
+                
+                // Add neighbors to queue
+                for (int neighbor : nodes[node_id].neighbors) {
+                    if (visited.find(neighbor) == visited.end()) {
+                        visited.insert(neighbor);
+                        parent[neighbor] = node_id;
+                        q.push(neighbor);
+                    }
+                }
+            }
+        }
+        
+        return {}; // No path found
+    }
+    
+    // Validates that a path respects priority ordering constraints
+    // CRITICAL: Must check that path visits nodes in non-decreasing priority order
+    bool isValidPath(const std::vector<int>& path) {
+        if (path.empty()) return false;
+        
+        int prev_priority = nodes[path[0]].priority;
+        for (size_t i = 1; i < path.size(); i++) {
+            int curr_priority = nodes[path[i]].priority;
+            // Path must maintain or improve priority (lower is better)
+            if (curr_priority > prev_priority) {
+                return false; // Priority degraded
+            }
+            prev_priority = curr_priority;
+        }
+        return true;
+    }
+};
