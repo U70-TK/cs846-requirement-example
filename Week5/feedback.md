@@ -29,7 +29,7 @@ The code for this task and its related files can be found in the `artifacts` fol
 
 **Task Description:**
 
-Document the ``main.py`` file in the provided project repository. This file contains the main function of the ``medical_reasoning_SFT`` project, which calls an open source LLM Supervised Fine-tuning framework `axolotl` on the `OpenMed/Medical-Reasoning-SFT-Trinity-Mini` dataset using LoRA adapters. Your task is to create documentation that explains what this file does, and/or any necessary technical details for the developers. 
+Document the provided project repository. The `main.py` file contains the main function of the ``medical_reasoning_SFT`` project, which calls an open source LLM Supervised Fine-tuning framework `axolotl` on the `OpenMed/Medical-Reasoning-SFT-Trinity-Mini` dataset using LoRA adapters. Your task is to create documentation that explains what this file does, and/or any necessary technical details for the developers. 
 
 **Starter Code:**
 
