@@ -12,7 +12,7 @@ Find the related files in the `artifacts` folder.
 
 ### Problem A: Code Documentation with Implementation-Dependent Contracts
 
-**Github repository URL:** https://github.com/U70-TK/cs846-requirement-example/Week5
+**Github repository URL:** https://github.com/U70-TK/cs846-requirement-example
 
 **Task Description:** 
 
@@ -569,4 +569,5 @@ invokes Axolotl's training or preprocessing command with the selected config.
 
 
 [3] Ahmmed, Jobayer, Myra B. Cohen, and Paul Gazzillo. "Towards Automated Configuration Documentation." Proceedings of the 39th IEEE/ACM International Conference on Automated Software Engineering. 2024.
+
 
