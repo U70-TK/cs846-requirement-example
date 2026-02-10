@@ -6,7 +6,7 @@
 
 **Github repository URL:** https://github.com/U70-TK/cs846-requirement-example
 
-Find the related files in the `artifacts` folder.
+Find the related files in the `Week5/artifacts` folder.
 
 ## Example Problems
 
@@ -20,7 +20,7 @@ Document the `findShortestPath` function in the provided code. The function is p
 
 **Starter Code:**
 
-The code for this task and its related files can be found in the `artifacts` folder. The starter code is located at `artifacts/graph_traversal.cpp`.
+The code for this task and its related files can be found in the `Week5/artifacts` folder. The starter code is located at `Week5/artifacts/graph_traversal.cpp`.
 
 
 ---
