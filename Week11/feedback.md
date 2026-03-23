@@ -126,6 +126,7 @@ Test Evasion: Random test data often produces identical results, so the bug only
 #### Guideline 4: Use Execution Profiler Traces for Optimizing a Program
 
 **Prompt and Context:**
+```
 You are optimizing this Python script for runtime performance while preserving correctness.
 
   Keep the behavior the same.
@@ -142,6 +143,7 @@ You are optimizing this Python script for runtime performance while preserving c
   6. You may continue using line_profiler to iterate further.
 
   Optimize only for runtime performance.
+```
 
 **Task:**
 Optimize `top_urls_by_unique_users` for performance. The current implementation works on moderate input sizes, but it scales poorly because it stores a large `set` of users for every URL.
@@ -511,11 +513,13 @@ When the task involves large inputs, explicitly tell the LLM the available memor
 Large-scale performance problems are often constrained by memory, not raw CPU time. If the model is not told about the memory limit, it may generate a fast-looking solution that still materializes huge intermediate structures and fails in practice. A memory-aware prompt pushes the model to reason about space complexity, data lifetime, and I/O strategy, which are central to performance on oversized datasets.
 
 **Prompt and Context:**
+```
 The current program is too slow and may exceed memory limits on full-scale input.
 Assume the input file is much larger than RAM and the machine has a strict 512 MB memory budget.
 First, identify which parts of the current approach cause the highest space usage and why.
 Then redesign the solution to minimize peak memory usage, using streaming, batching, or external aggregation if needed.
 After that, optimize runtime within the memory budget while preserving exact correctness.
+```
 
 **Task:**
 Optimize `top_urls_by_unique_users` for performance. The current implementation works on moderate input sizes, but it scales poorly because it stores a large `set` of users for every URL.
