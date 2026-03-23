@@ -16,7 +16,6 @@ Find the related files in the `Week11/artifacts`, and `Week11/feedback.md` folde
 
 **Model to Use:** GPT-4.1
 
-
 **Task Description:** 
 You are given a `TransactionConflictResolver` class in `conflict_resolver.py` that processes a batch of transactions and returns only non-conflicting ones. A transaction conflicts if it modifies the same resource as any previously accepted transaction (not just any previously seen transaction). The code is functionally correct but has `O(n²)` complexity and apparent dead **code**. Optimize the `process_transactions` method to run faster while preserving correctness. All existing test cases in `test_resolver.py` must continue to pass after your changes.
 
@@ -440,6 +439,14 @@ You are given a `TransactionConflictResolver` class that processes transactions 
 **Starter Code:**
 Find the starter code in the `Problem_A` directory. The main file to optimize is `conflict_resolver.py`. Do not modify `test_resolver.py`.
 Run tests using pytest `test_resolver.py -v` and run benchmark using `python run_benchmark.py`.
+
+**Description:**
+Before you accept any LLM-generated performance optimization, make sure to verify it using test cases that are designed to reveal any differences in meaning between the original and optimized code. The LLM should walk through these tricky cases step by step and show that the optimized code gives the same results as the original. If the results are different, the optimization should be rejected or corrected.
+
+**Reasoning:**
+Empirical evidence indicates that 62% of large language model (LLM)-suggested optimizations introduce bugs, and among the correct optimizations, 73% yield less than a 5% speed improvement, resulting in approximately 90% of attempts being either ineffective or detrimental [1]. Further studies demonstrate that most optimization methods exhibit declining correctness over successive iterations, with naive strategies often prioritizing speed at the expense of correctness [2]. A comprehensive survey across 15 studies identified the challenge of balancing correctness and efficiency as a primary concern [3]. The fundamental problem is that LLMs frequently optimize for speed without verifying behavioral equivalence.
+
+
 
 **Prompt and Context:** 
 ```
