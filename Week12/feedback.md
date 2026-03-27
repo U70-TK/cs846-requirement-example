@@ -6,7 +6,7 @@
 
 **Github repository URL:** https://github.com/U70-TK/cs846-requirement-example
 
-Find the related files in the `Week12/artifacts`, and `Week12/feedback.md` folders.
+Find the related files in the `Week12` folder.
 
 ## Example Problems
 
