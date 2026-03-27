@@ -88,5 +88,3 @@ if __name__ == "__main__":
     print("\nRejected Transactions:")
     for result in rejected:
         print(f"  - {result.transaction.transaction_id}: {result.reason}")
-
-
