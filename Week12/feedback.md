@@ -325,6 +325,7 @@ Approved Transactions:
   - txn_003: 100 CAD
 
 Rejected Transactions:
+No
 ```
 
 **Why is this better?**
