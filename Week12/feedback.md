@@ -27,7 +27,7 @@ Implement logging for a high-throughput card-fraud authorization pipeline where:
 **Starter Code:**
 
 ```
-You can find the starter code for this problem under `Week12/artifacts/problem_A` folder.
+You can find the starter code for this problem under `Week12/artifacts/problem_A/transactions.py` folder.
 ```
 
 
@@ -64,7 +64,7 @@ You can find the starter code for this problem under `Week12/artifacts/problem_A
 **Prompt and Context:**
 
 ```
-You are given a Python file at `Week12/artifacts/problem_A/run_experiment.py`.
+You are given a Python file at `Week12/artifacts/problem_A/transactions.py`.
 
 Task: Add logging to this code following this rule strictly:
 - Avoid logging on hot paths.
@@ -169,7 +169,7 @@ A policy split by intent (audit vs diagnostics) is better than a single prohibit
 **Prompt and Context:**
 
 ```
-You are given a Python file at `Week12/artifacts/problem_A/run_experiment.py`.
+You are given a Python file at `Week12/artifacts/problem_A/transactions.py`.
 
 Task: Add logging to this code following this rule strictly:
 
