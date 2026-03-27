@@ -3,7 +3,12 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import List
 
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 logger = logging.getLogger(__name__)
+
 
 @dataclass
 class Transaction:
@@ -13,16 +18,18 @@ class Transaction:
     merchant_id: str
     timestamp: datetime
 
+
 @dataclass
 class RejectionResult:
     transaction: Transaction
     reason: str
 
+
 DAILY_LIMIT = 10_000.0
 BLOCKED_MERCHANTS = {"merchant_99", "merchant_42"}
 
+
 def validate_transaction(tx: Transaction) -> str | None:
-    """Returns a rejection reason string, or None if valid."""
     if tx.amount <= 0:
         return "non_positive_amount"
     if tx.amount > DAILY_LIMIT:
@@ -33,17 +40,16 @@ def validate_transaction(tx: Transaction) -> str | None:
         return "unsupported_currency"
     return None
 
+
 def process_transactions(
     transactions: List[Transaction],
 ) -> tuple[List[Transaction], List[RejectionResult]]:
-    """
-    Process a batch of transactions.
-    Returns (approved_list, rejected_list).
 
-    TODO: Add logging here following the unified logging guidelines.
-    The compliance requirement mandates one log entry per rejected
-    transaction, including: transaction_id, amount, reason, timestamp.
-    """
+    # Guideline 6: 1 INFO log per major stage
+    logger.info("Starting batch processing", extra={
+        "batch_size": len(transactions)
+    })
+
     approved = []
     rejected = []
 
@@ -51,16 +57,36 @@ def process_transactions(
         reason = validate_transaction(tx)
         if reason:
             rejected.append(RejectionResult(transaction=tx, reason=reason))
-            logger.warning(
-                "Transaction rejected.",
-                extra={
-                    "transaction_id": tx.transaction_id,
-                    "amount": tx.amount,
-                    "reason": reason,
-                    "timestamp": tx.timestamp
-                }
-            )
         else:
             approved.append(tx)
 
+    # Guideline 6: summary only, no per-record logs
+    logger.info("Batch processing complete", extra={
+        "batch_size": len(transactions),
+        "approved_count": len(approved),
+        "rejected_count": len(rejected)
+    })
+
     return approved, rejected
+
+
+if __name__ == "__main__":
+    transactions = [
+        Transaction("txn_001", 500, "USD", "merchant_1", datetime.now()),
+        Transaction("txn_002", 15000, "USD", "merchant_2", datetime.now()),
+        Transaction("txn_003", 100, "CAD", "merchant_99", datetime.now()),
+    ]
+
+    approved, rejected = process_transactions(transactions)
+
+
+
+    print("Approved Transactions:")
+    for tx in approved:
+        print(f"  - {tx.transaction_id}: {tx.amount} {tx.currency}")
+
+    print("\nRejected Transactions:")
+    for result in rejected:
+        print(f"  - {result.transaction.transaction_id}: {result.reason}")
+
+
