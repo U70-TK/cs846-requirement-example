@@ -41,8 +41,17 @@ You can find the starter code for this problem under `Week12/artifacts/problem_A
 
 **Task Description:**
 
+You are working on a payment processing system. Every transaction that gets rejected must be individually logged with full details for regulatory compliance (PCI-DSS). Auditors require a complete, per-record rejection trail, one log entry per rejected transaction, no aggregation allowed.
+
+```
+Add logging to process_transactions(). Each rejected transaction must produce its own log entry containing the transaction ID, amount, rejection reason, and timestamp. Do not aggregate rejections into a summary.
+```
+
 **Starter Code:**
 
+```
+You can find the starter code for this problem under `Week12/artifacts/problem_B/transaction_auditor.py` folder.
+```
 ---
 
 ### Problem C: 
