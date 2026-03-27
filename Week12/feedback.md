@@ -38,6 +38,7 @@ You can find the starter code for this problem under `Week12/artifacts/problem_A
 
 **Github repository URL:** https://github.com/U70-TK/cs846-requirement-example
 
+**Model to Use:** GPT-4o
 
 **Task Description:**
 
