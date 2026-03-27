@@ -14,6 +14,7 @@ Find the related files in the `Week12` folder.
 
 **Github repository URL:** https://github.com/U70-TK/cs846-requirement-example
 
+**Model to Use:** GPT-5 mini
 
 **Task Description:** 
 
@@ -60,6 +61,8 @@ You can find the starter code for this problem under `Week12/artifacts/problem_A
 ---
 
 #### Guideline 3: Avoid Logging on Hot Paths.
+
+**Model to Use:** GPT-5 mini
 
 **Prompt and Context:**
 
@@ -145,6 +148,8 @@ That means it fails audit/forensics use cases, even though it follows “avoid h
 ### 3. New and Updated Guidelines that worked
 
 #### Guideline 1: Separate "Audit-Critical Event Logging" from "Diagnostic Logging" on Hot Paths
+
+**Model to Use:** GPT-5 mini
 
 **Description**
 
