@@ -517,6 +517,9 @@ No
 
 #### Guideline 3: Inventory Existing Logging Conventions Before Generating New Code
 
+**Declaration:**
+This guideline was originally proposed by Claude Code 4.6 Opus. 
+
 **Description**
 
 Before adding logging to a new module, instruct the LLM to first scan the codebase and report back all distinct logging styles it finds — without generating any code yet.
