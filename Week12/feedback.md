@@ -55,14 +55,22 @@ You can find the starter code for this problem under `Week12/artifacts/problem_B
 ```
 ---
 
-### Problem C: 
+### Problem C:
 
 **Github repository URL:** https://github.com/U70-TK/cs846-requirement-example
 
+**Models to Use:**
+Please use GPT-4o for reproduciblility.
 
 **Task Description:**
 
+You are given a FastAPI application under `Week12/artifacts/problem_C/` with 6 modules (`main.py`, `auth.py`, `order.py`, `payment.py`, `user_service.py`, `training.py`). This is an older codebase where different developers have introduced their own logging styles over time, so the logging conventions vary across files.
+
+An OpenAPI spec (`inventory_spec.yaml`) describes a new inventory feature to add. Feed the spec along with the existing codebase to GPT-4o and ask it to implement the feature following existing logging conventions. Observe which convention(s) the model picks and whether it maintains consistency with the full codebase.
+
 **Starter Code:**
+
+You can find the starter code and the OpenAPI spec under `Week12/artifacts/problem_C/inventory_spec.yaml`.
 
 ---
 
@@ -171,18 +179,182 @@ The core issue is that Guideline 6 is written as a universal engineering rule wi
 
 ---
 
-#### Guideline : 
+#### Guideline 2: Enforce consistent log via Repository-Wide Indexing and Custom Instructions
 
-**Prompt and Context:**  
+**Prompt and Context:**
 
-**Task:** 
+```
+openapi: 3.0.0
+info:
+  title: Inventory Service
+  version: 1.0.0
+
+x-instructions:
+  logging_policy: |
+    When implementing any endpoint:
+    1. Read ALL repository logging examples below carefully.
+    2. Follow the repository's existing logging conventions strictly.
+    3. Do NOT introduce new logging styles or improve existing ones.
+    4. Do NOT normalize or unify the styles — match what already exists.
+
+x-repository-examples:
+  - file: auth.py
+    notes: imports logging inside each function, uses root logger with f-strings
+    code: |
+      @router.post("/login")
+      def login(req: LoginRequest):
+          import logging
+          logging.info(f"User {req.email} attempting login")
+
+  - file: order.py
+    notes: module-level logger via getLogger(__name__), uses %s formatting
+    code: |
+      import logging
+      logger = logging.getLogger(__name__)
+
+      @router.post("/")
+      def create_order(req: OrderRequest):
+          logger.info("Creating order %s for user %s", order_id, req.email)
+
+  - file: payment.py
+    notes: module-level logger with f-strings mixed with print()
+    code: |
+      logger = logging.getLogger(__name__)
+
+      @router.post("/")
+      def charge(req: PaymentRequest):
+          logger.debug(f"Charging {req.email} amount={req.amount}")
+          if req.amount > 1000:
+              print(f"[ALERT] High value transaction: {req.email} paying {req.amount}")
+
+  - file: user_service.py
+    notes: no logging module at all, only print()
+    code: |
+      @router.post("/")
+      def create_user(req: CreateUserRequest):
+          print("Creating user:", req.email)
+          print("Password:", req.password)
+
+  - file: training.py
+    notes: uses print(), sys.stdout.write(), and sys.stderr.write()
+    code: |
+      import sys
+
+      @router.post("/run")
+      def train(req: TrainRequest):
+          print("training started, run_id=" + run_id)
+          sys.stdout.write(f"[{run_id}] epoch {epoch + 1}: processing {batch}\n")
+
+      @router.get("/runs")
+      def list_runs():
+          sys.stderr.write(f"DEBUG: listing {len(TRAINING_RUNS)} training runs\n")
+
+  - file: main.py
+    notes: uses root logging.warning() directly for a routine check
+    code: |
+      @app.get("/health")
+      def health():
+          logging.warning("Health check hit")
+
+paths:
+  /inventory:
+    post:
+      summary: Add a new inventory item
+      operationId: addItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, quantity, price]
+              properties:
+                name:
+                  type: string
+                quantity:
+                  type: integer
+                price:
+                  type: number
+      responses:
+        '201':
+          description: Item created
+    get:
+      summary: List all inventory items
+      operationId: listItems
+      responses:
+        '200':
+          description: List of items
+
+  /inventory/{item_id}:
+    get:
+      summary: Get a single inventory item
+      operationId: getItem
+      parameters:
+        - name: item_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Item details
+        '404':
+          description: Item not found
+
+x-task:
+  description: |
+    Implement inventory.py as a FastAPI APIRouter with these three endpoints.
+    Add logging to every endpoint consistent with the repository examples above.
+    Wire the router into main.py.
+    Do not unify, fix, or improve the existing logging styles.
+    Match existing patterns exactly as they appear in this codebase.
+```
+
+**Task:**
+
+Implement the inventory endpoints described in the OpenAPI spec as a new FastAPI module (inventory.py).
+Add logging to every endpoint, following the logging conventions already present in the codebase.
+Wire the new router into main.py.
 
 **Solution or Output generated by GitHub Copilot:**
 
+```
+from fastapi import APIRouter, HTTPException
+
+router = APIRouter()
+
+# POST /inventory
+@router.post("/inventory")
+def add_item(item: dict):
+    import logging
+    logging.info(f"Adding item: {item}")
+    # Simulate adding item logic
+    return {"message": "Item created"}, 201
+
+# GET /inventory
+@router.get("/inventory")
+def list_items():
+    import logging
+    logging.info("Listing all items")
+    # Simulate listing items logic
+    return {"items": []}, 200
+
+# GET /inventory/{item_id}
+@router.get("/inventory/{item_id}")
+def get_item(item_id: str):
+    import logging
+    logging.info(f"Fetching item with ID: {item_id}")
+    # Simulate fetching item logic
+    if item_id == "not_found":
+        raise HTTPException(status_code=404, detail="Item not found")
+    return {"item": {"id": item_id}}, 200
+```
+
 **Why is it bad?**
 
-
-...
+- In brownfield projects, logging conventions often drift over time, different developers may introduce different styles, and no single standard dominates.
+- In these cases, telling the LLM to "explore the repository to analyze our existing logging conventions" does not yield good results. The model will latch onto one style it finds familiar and apply it uniformly, rather than recognizing the inconsistency.
+- The guideline assumes the codebase has a consistent convention to discover. When it doesn't, repo-wide indexing and custom instructions alone cannot solve the problem — the team needs to first establish a canonical logging standard before the LLM can enforce it.
 
 ---
 
@@ -343,21 +515,92 @@ No
 
 ---
 
-#### Guideline 3: 
+#### Guideline 3: Inventory Existing Logging Conventions Before Generating New Code
 
 **Description**
 
+Before adding logging to a new module, instruct the LLM to first scan the codebase and report back all distinct logging styles it finds — without generating any code yet.
+The developer then selects which convention the new code should follow. Only after that selection does the LLM proceed with implementation.
+
 **Reasoning**
 
-**Prompt and Context:** 
+Guideline 2 assumes the codebase already has a consistent convention that the LLM
+can discover and replicate. In brownfield projects this is often not the case. Logging
+styles drift over time as different developers contribute. When told to "follow existing
+conventions," the LLM silently picks one style (typically the one closest to its training
+data defaults) and ignores the rest, producing code that looks correct in isolation but
+is inconsistent with most of the codebase.
 
-**Task:** 
+By splitting the task into two steps — first inventory, then implement — the developer
+stays in the loop. They see the actual state of the codebase and make a deliberate
+choice, rather than letting the LLM make an implicit one.
+```
+
+**Prompt and Context:**
+
+```
+Step 1:
+
+Read all Python files in this project. For each file, identify the logging approach used
+and give me a short summary. Group them by style. I need to see:
+- How logging is imported (if at all)
+- Whether it uses the root logger, a module-level logger, print(), or something else
+- The string formatting style (f-strings, %s, concatenation, etc.)
+
+Do not generate any new code. Just report what you find.
+
+Step 2:
+
+Now implement inventory.py following the OpenAPI spec in inventory_spec.yaml.
+Use only the logging style I selected: [developer inserts chosen style here].
+Do not mix in any other style from the codebase.
+```
+
+**Task:**
+
+Add an inventory module (inventory.py) with endpoints to add, list, and look up
+inventory items. Use the two-step prompt above: first ask the LLM to inventory the
+existing logging styles, then pick one and have it implement the feature using only
+that style.
 
 **Solution or Output generated by Github Copilot:**
 
+```
+Here is the summary of logging approaches used across the Python files in the project, grouped by style:
+
+1. Root Logger with logging Module
+Files: inventory.py, main.py
+Import Style: import logging inside functions or at the module level.
+Usage:
+inventory.py: Logs messages like logging.info(f"Adding item: {item}").
+main.py: Uses logging.warning("Health check hit") for a health check endpoint.
+String Formatting: Primarily f-strings.
+2. Module-Level Logger with logging.getLogger(__name__)
+Files: payment.py
+Import Style: import logging at the module level.
+Usage:
+Logs debug, info, and error messages using logger.debug, logger.info, and logger.error.
+Example: logger.debug(f"Charging {req.email} amount={req.amount}").
+String Formatting: Primarily f-strings.
+3. Print Statements
+Files: user_service.py, training.py
+Import Style: No logging module used.
+Usage:
+user_service.py: Uses print() for all logs, e.g., print("Creating user:", req.email).
+training.py: Mixes print() with sys.stdout.write and sys.stderr.write.
+String Formatting: Concatenation and f-strings.
+4. Mixed Logging Styles
+Files: payment.py
+Usage: Combines logger with print() for high-value transactions.
+Example: print(f"[ALERT] High value transaction: {req.email} paying {req.amount}").
+Let me know if you need further analysis or adjustments!
+```
+
 **Why is this better?**
 
-
-...
+- The LLM correctly identified 4 distinct logging styles across the codebase (root logger, module-level logger, print-only, and mixed) instead of silently picking one.
+- It also caught that `order.py` uses `%s` formatting while `payment.py` uses f-strings — a subtle difference that was ignored entirely in the Guideline 2 attempt.
+- The developer now has a clear picture of the inconsistency and can make an informed decision (e.g., "use the `order.py` style for all new code going forward") before any code is generated.
+- This two-step approach prevents the LLM from making an implicit convention choice on the developer's behalf, which is exactly what went wrong when Guideline 2 was applied directly.
 
 ---
